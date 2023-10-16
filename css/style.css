@@ -1,0 +1,393 @@
+@import url("./variables.css");
+
+* {
+    box-sizing: border-box;
+}
+
+span {
+    user-select: none;
+}
+
+/* ==========================
+ MAIN CONTAINERS
+========================== */
+
+html,
+body {
+    position: relative;
+    padding: 0;
+    margin: 0;
+    height: 100vh; /* fallback for Js load */
+    height: var(--doc-height);
+    background-color: var(--html-background-color);
+    font-family: 'Inter';
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+body {
+    /* background-image: url('../medias/images/xxx.jpg'); */
+    background-size: cover;
+    background-position: top;
+    background-color: #000000;
+}
+
+.main {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    min-height: var(--main-height);
+    min-width: 100%;
+    margin: 0;
+    padding: 0;
+    color: var(--font-color-default);
+}
+
+/* ==========================
+ CLICKABLES
+========================== */
+
+/* Anchors */
+a {
+    -webkit-tap-highlight-color: transparent;
+    text-decoration: none;
+    color: var(--font-color-links);
+}
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    a:focus {
+        -webkit-tap-highlight-color: transparent;
+    }
+
+/* Buttons */
+button {
+    -webkit-tap-highlight-color: transparent;
+    box-sizing: border-box;
+    display: flex;
+    font-family: Inter;
+    border: none;
+    border-radius: var(--button-border-radius);
+    background-color: var(--gray-10);
+    padding: 2% 5% 2% 5%;
+    margin: 0;
+    font-size: var(--button-font-size);
+    flex-wrap: wrap;
+    color: var(--gray-80);
+}
+    @media (hover:hover) and (pointer: fine) {
+        button:hover {
+            cursor: pointer;
+            background-color: var(--gray-20);
+        }
+    }
+    button:focus {
+        -webkit-tap-highlight-color: transparent;
+    }
+
+.primary-button {
+    border: 1px solid var(--primary);
+    background-color: var(--primary);
+    color: var(--on-primary);
+}
+
+    .primary-button:hover {
+        background-color: var(--primary-hover);
+    }
+
+.secondary-button {
+    background-color: var(--on-primary);
+    border: 1px solid var(--primary);
+    color: var(--primary);
+}
+
+    .secondary-button:hover {
+        border: 1px solid var(--primary-hover);
+        background-color: var(--gray-10);
+        color: var(--primary-hover);
+    }
+
+.warning-button {
+    background-color: var(--lazr-red);
+    border: 1px solid var(--lazr-red);
+    color: var(--on-primary);
+}
+
+    .warning-button:hover {
+        border: 1px solid var(--lazr-red);
+        background-color: var(--gray-10);
+        color: var(--lazr-red);
+    }
+
+/* Switch */
+/* The switch - the box around the slider */
+.switch {
+    -webkit-tap-highlight-color: transparent;
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+  
+  /* Hide default HTML checkbox */
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+  
+  /* The slider */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--gray-20);
+    -webkit-transition: .3s;
+    transition: .3s ease-out;
+}
+  
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .3s;
+    transition: .3s ease-out;
+}
+  
+input:checked + .slider {
+    background-color: var(--primary);
+}
+  
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+  
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+  
+.slider.round:before {
+    border-radius: 50%;
+}
+
+.modal-background {
+    box-sizing: border-box;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: #000000a4;
+    z-index: 50;
+    opacity: 0;
+    transition: opacity .2s linear;
+}
+
+.modal-div {
+    box-sizing: border-box;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 90%;
+    height: 60%;
+    border-radius: 20px;
+    background-color: #1d1d1d;
+    overflow-y: scroll;
+    opacity: 0;
+    transition: opacity .2s linear;
+}
+/* Hide scrollbar for Chrome, Safari and Opera */
+.modal-div::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.modal-div {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.modal-inner-div {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    min-height: 100%;
+    height: fit-content;
+    padding: 20px;
+    border-radius: 20px;
+    color: #ffffff;
+}
+
+.modal-title {
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    margin-top: 10px;
+}
+
+/* ----------------------------- App specific ------------------------------ */
+
+.header {
+    display: flex;
+    width: 100%;
+    min-height: var(--header-height);
+    height: var(--header-height);
+    /* background-color: orange; */
+    justify-content: center;
+    align-items: center;
+}
+
+.footer {
+    display: flex;
+    width: 100%;
+    min-height: var(--footer-height);
+    height: var(--footer-height);
+    /* background-color: magenta; */
+    justify-content: center;
+    align-items: center;
+}
+
+.sound-tile {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+    height: 90px;
+    margin-bottom: 20px;
+    background-color: #304d4d;
+    color: white;
+}
+
+.sound-tile-top-part {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-height: 40%;
+    background-color: #202e2e;
+    padding: 0 var(--horizontal-padding);
+}
+
+.sound-name {
+    
+}
+
+.sound-tile-bottom-part {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    min-height: 60%;
+    padding: 0 var(--horizontal-padding);
+}
+
+.sound-icon-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 15%;
+    height: 70%;
+}
+
+.sound-icon {
+    height: 100%;
+}
+
+.slider-area {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+    height: 100%;
+}
+
+.audio-volume-icon-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 10%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.audio-volume-icon {
+    height: 35%;
+    opacity: .5;
+}
+
+.slider-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    height: 100%;
+    padding: 0 10px;
+}
+
+.sound-slider {
+    -webkit-appearance: none;  /* Override default CSS styles */
+    -webkit-tap-highlight-color: transparent;
+    appearance: none;
+    width: 100%; /* Full-width */
+    height: 20px; /* Specified height */
+    background: #202e2e; /* background */
+    outline: none; /* Remove outline */
+    border-radius: 500px;
+}
+.sound-slider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    -webkit-tap-highlight-color: transparent;
+    appearance: none;
+    width: 25px; /* Set a specific slider handle width */
+    height: 25px; /* Slider handle height */
+    background: #76b4b4; /* Green background */
+    cursor: pointer; /* Cursor on hover */
+    border-radius: 500px;
+  }
+            
+        
+
+/* ==========================
+ MEDIA QUERIES
+========================== */
+
+/* Tablets ----------- */
+@media (min-width : 767px) and (max-width : 1279px) {
+    
+}
+
+/* Laptops ----------- */
+@media (min-width: 1280px) and (max-width: 1919px) {
+    
+}
+
+/* Desktops ----------- */
+@media (min-width: 1920px) {
+    
+}
