@@ -17,4 +17,10 @@ export const SOUNDBANK = [
         src: "gyro",
         icon: "gyro"
     },
+    {
+        id: 4,
+        name: "Grillons",
+        src: "crickets",
+        icon: "crickets"
+    },
 ];

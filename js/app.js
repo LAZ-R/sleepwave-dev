@@ -16,12 +16,16 @@ const AUDIOS = [
         audio: new Audio(`./medias/audio/gyro.mp3`), 
         id: 3
     },
+    {
+        audio: new Audio(`./medias/audio/crickets.mp3`), 
+        id: 4
+    },
 ]
 
 // MÉTHODES -------------------------------------------------------------------
 
 const STORAGE = localStorage;
-const appShortName = `sleepwave03`;
+const appShortName = `sleepwave04`;
 
 if (STORAGE.getItem(`${appShortName}FirstTime`) === null) {
     STORAGE.setItem(`${appShortName}FirstTime`, '0');
@@ -37,6 +41,10 @@ if (STORAGE.getItem(`${appShortName}FirstTime`) === null) {
             },
             {
                 id: 3,
+                vol: 0.5
+            },
+            {
+                id: 4,
                 vol: 0.5
             },
         ],
@@ -99,8 +107,10 @@ const getSoundTile = (sound) => {
                         >
                     </div>
                     <img class="audio-volume-icon" src="./medias/images/font-awsome/volume-high-solid.svg" style="filter: ${getFilterStringForHexValue('#ffffff')};" />
-
                 </div>
+                <!-- <div class="lock-icon-container--open">
+                    <img class="lock-icon" src="./medias/images/font-awsome/lock-open-solid.svg" />
+                </div> -->
             </div>
         </div>
     `;
