@@ -1,7 +1,6 @@
 // IMPORTS --------------------------------------------------------------------
 import { SOUNDBANK } from "./data.js";
-import { getFilterStringForHexValue } from "./utils/utils.js";
-import { getRandomIntegerBetween } from "./utils/utils.js";
+import { getFilterStringForHexValue, getRandomIntegerBetween } from "./utils/utils.js";
 
 // CONSTANTES -----------------------------------------------------------------
 const AUDIOS = [
