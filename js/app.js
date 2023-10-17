@@ -21,7 +21,7 @@ const AUDIOS = [
 // MÉTHODES -------------------------------------------------------------------
 
 const STORAGE = localStorage;
-const appShortName = `sleepwave02`;
+const appShortName = `sleepwave03`;
 
 if (STORAGE.getItem(`${appShortName}FirstTime`) === null) {
     STORAGE.setItem(`${appShortName}FirstTime`, '0');
@@ -123,7 +123,7 @@ window.addEventListener('resize', setDocumentHeight);
 setDocumentHeight();
 
 const main = document.getElementById('main');
-main.innerHTML = getSoundsTiles();
+main.innerHTML = `<div class="app-title-container"><img class="app-title-icon" src="./medias/images/logo.png" /></div> ${getSoundsTiles()}`;
 
 AUDIOS.forEach(sound => {
     const user = getUser();
