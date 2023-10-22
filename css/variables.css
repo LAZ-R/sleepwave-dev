@@ -14,6 +14,11 @@
     --gray-20: #cccccc;
     --gray-10: #e6e6e6;
 
+    --main-0:   #181f1f;
+    --main-25:  #202e2e;
+    --main-50:  #304d4d;
+    --main-100: #76b4b4;
+
     /* Primary */
     --primary: #3a386e;
     --primary-hover: #0071bd;
@@ -21,12 +26,11 @@
     --on-primary : #ffffff;
 
     /* Accent */
-    --accent: #a441bd;
-    --accent-hover: #973dad;
+    --accent: #f29746;
 
     /* Constant colors */
     --lazr-red: #b85858;
-    --html-background-color: #797979;
+    --html-background-color: var(--main-0);
     
     /* Font colors */
     --font-color-default: var(--gray-60);
