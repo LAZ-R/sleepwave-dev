@@ -48,7 +48,7 @@ const AUDIOS = [
 // MÉTHODES -------------------------------------------------------------------
 
 const STORAGE = localStorage;
-const appShortName = `sleepwave05`;
+const appShortName = `sleepwave06`;
 
 if (STORAGE.getItem(`${appShortName}FirstTime`) === null) {
     STORAGE.setItem(`${appShortName}FirstTime`, '0');
@@ -57,41 +57,49 @@ if (STORAGE.getItem(`${appShortName}FirstTime`) === null) {
             {
                 id: 1,
                 vol: 0.5,
+                muted: false,
                 locked: false,
             },
             {
                 id: 2,
                 vol: 0.5,
+                muted: false,
                 locked: false,
             },
             {
                 id: 3,
                 vol: 0.5,
+                muted: false,
                 locked: false,
             },
             {
                 id: 4,
                 vol: 0.5,
+                muted: false,
                 locked: false,
             },
             {
                 id: 5,
                 vol: 0.5, 
+                muted: false,
                 locked: false,
             },
             {
                 id: 6,
                 vol: 0.5,
+                muted: false,
                 locked: false,
             },  
             {
                 id: 7,
                 vol: 0.5,
+                muted: false,
                 locked: false,
             },
             {
                 id: 8,
                 vol: 0.5,
+                muted: false,
                 locked: false,
             },
         ],  
@@ -109,18 +117,56 @@ const setUser = (user) => {
 
 // USER INTERACTIONS -----------------------------------------------------------
 
+const onMuteClick = (soundId) => {
+    let user = getUser();
+    user.sounds.forEach(soundSetting => {
+        if (soundSetting.id == soundId) {
+            const muteArea = document.getElementById(`muteArea${soundId}`);
+            const slider = document.getElementById(`soundSlider${soundId}`);
+            let muted = soundSetting.muted;
+            if (muted) {
+                muteArea.classList.replace('muted', 'unmuted');
+                slider.classList.replace('muted-slider', 'unmuted-slider');
+                AUDIOS.forEach(sound => {
+                    if (sound.id == soundId) {
+                        sound.audio.play();
+                    }
+                });
+            } else {
+                muteArea.classList.replace('unmuted', 'muted');
+                slider.classList.replace('unmuted-slider', 'muted-slider');
+                AUDIOS.forEach(sound => {
+                    if (sound.id == soundId) {
+                        sound.audio.pause();
+                    }
+                });
+            }
+            muted = !muted;
+            muteArea.innerHTML = `${getMuteIcon(muted)}`;
+            soundSetting.muted = !soundSetting.muted;
+        }
+    });
+    setUser(user);
+}
+window.onMuteClick = onMuteClick;
+
 const onLockClick = (soundId) => {
     let user = getUser();
     user.sounds.forEach(soundSetting => {
         if (soundSetting.id == soundId) {
+            const muteArea = document.getElementById(`muteArea${soundId}`);
             const slider = document.getElementById(`soundSlider${soundId}`);
             const lockArea = document.getElementById(`lockArea${soundId}`);
             let locked = soundSetting.locked;
             if (locked) {
+                muteArea.removeAttribute('disabled');
+                muteArea.classList.replace('locked-mute', 'unlocked-mute');
                 slider.removeAttribute('disabled');
                 slider.classList.replace('locked-slider', 'unlocked-slider');
                 lockArea.classList.replace('locked', 'unlocked');
             } else {
+                muteArea.setAttribute('disabled', true);
+                muteArea.classList.replace('unlocked-mute', 'locked-mute');
                 slider.setAttribute('disabled', true);
                 slider.classList.replace('unlocked-slider', 'locked-slider');
                 lockArea.classList.replace('unlocked', 'locked');
@@ -156,6 +202,31 @@ window.onSliderInput = onSliderInput;
 
 // DOM GENERATION --------------------------------------------------------------
 
+const getMuteIcon = (muted) => {
+    return `
+        <img 
+            class="mute-icon" 
+            src="./medias/images/font-awsome/ban-solid.svg" 
+            style="filter: ${getFilterStringForHexValue('#ffffff')}; opacity: ${muted ? 1 : .25}"
+        />`;
+    }
+
+const getMuteArea = (soundId) => {
+    const user = getUser();
+    let muted = false;
+    let locked = false;
+    user.sounds.forEach(soundSetting => {
+        if (soundSetting.id == soundId) {
+            muted = soundSetting.muted;
+            locked = soundSetting.locked;
+        }
+    });
+    return `
+        <button id="muteArea${soundId}" class="mute-icon-container ${muted ? 'muted' : 'unmuted'} ${locked ? 'locked-mute' : 'unlocked-mute'}" ${locked ? 'disabled' : ''} onclick="onMuteClick(${soundId})">
+            ${getMuteIcon(muted)}
+        </button>`;
+}
+
 const getLockIcon = (locked) => {
     return `
         <img 
@@ -183,10 +254,12 @@ const getSoundTile = (sound) => {
     const user = getUser();
     let vol = 0;
     let locked = false;
+    let muted = false;
     user.sounds.forEach(soundSetting => {
         if (soundSetting.id == sound.id) {
             vol = soundSetting.vol * 100;
             locked = soundSetting.locked;
+            muted = soundSetting.muted;
         }
     });
     return `
@@ -196,6 +269,7 @@ const getSoundTile = (sound) => {
                 <span class="sound-volume" id="soundVol${sound.id}">${Math.round(vol)}%</span>  
             </div>
             <div class="sound-tile-bottom-part">
+                ${getMuteArea(sound.id)}
                 <div class="slider-area">
                     <img 
                         class="audio-volume-icon" 
@@ -208,7 +282,7 @@ const getSoundTile = (sound) => {
                             min="0" 
                             max="100" 
                             value="${vol}" 
-                            class="sound-slider ${locked ? 'locked-slider' : 'unlocked-slider'}" 
+                            class="sound-slider ${locked ? 'locked-slider' : 'unlocked-slider'} ${muted ? 'muted-slider' : 'unmuted-slider'}" 
                             id="soundSlider${sound.id}" 
                             oninput="onSliderInput(${sound.id})"
                             ${locked ? 'disabled' : ''}
@@ -253,13 +327,21 @@ main.innerHTML = `
 AUDIOS.forEach(sound => {
     const user = getUser();
     let vol = 0;
+    let muted = false;
     user.sounds.forEach(soundSetting => {
         if (soundSetting.id == sound.id) {
             vol = soundSetting.vol;
+            muted = soundSetting.muted;
         } 
     });
     sound.audio.volume = vol;
     sound.audio.loop = true;
     sound.audio.currentTime = getRandomIntegerBetween(10, 240);
-    sound.audio.play();
+    sound.audio.addEventListener("canplaythrough", (event) => {
+        //console.log(sound.name);
+        if (!muted) {
+            //sound.audio.currentTime = 10; // BUG DE OUF JSP PK
+            sound.audio.play();
+        }
+    });
 });  
