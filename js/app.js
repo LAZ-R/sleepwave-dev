@@ -43,12 +43,22 @@ const AUDIOS = [
         name: "City life",
         audio: new Audio(`./medias/audio/people.mp3`),
     }, 
+    {
+        id: 9,
+        name: "Police 2",
+        audio: new Audio(`./medias/audio/police2.mp3`),
+    },
+    {
+        id: 10,
+        name: "Distant ads",
+        audio: new Audio(`./medias/audio/police2.mp3`),
+    },
 ]  
 
 // MÉTHODES -------------------------------------------------------------------
 
 const STORAGE = localStorage;
-const appShortName = `sleepwave06`;
+const appShortName = `sleepwave07`;
 
 if (STORAGE.getItem(`${appShortName}FirstTime`) === null) {
     STORAGE.setItem(`${appShortName}FirstTime`, '0');
@@ -98,6 +108,18 @@ if (STORAGE.getItem(`${appShortName}FirstTime`) === null) {
             },
             {
                 id: 8,
+                vol: 0.5,
+                muted: false,
+                locked: false,
+            },
+            {
+                id: 9,
+                vol: 0.5,
+                muted: false,
+                locked: false,
+            },
+            {
+                id: 10,
                 vol: 0.5,
                 muted: false,
                 locked: false,
@@ -336,7 +358,7 @@ AUDIOS.forEach(sound => {
     });
     sound.audio.volume = vol;
     sound.audio.loop = true;
-    sound.audio.currentTime = getRandomIntegerBetween(10, 240);
+    sound.audio.currentTime = getRandomIntegerBetween(10, sound.audio.duration - 5);
     sound.audio.addEventListener("canplaythrough", (event) => {
         //console.log(sound.name);
         if (!muted) {
