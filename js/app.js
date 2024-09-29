@@ -51,14 +51,14 @@ const AUDIOS = [
     {
         id: 10,
         name: "Distant ads",
-        audio: new Audio(`./medias/audio/police2.mp3`),
+        audio: new Audio(`./medias/audio/ads.mp3`),
     },
 ]  
 
 // MÉTHODES -------------------------------------------------------------------
 
 const STORAGE = localStorage;
-const appShortName = `sleepwave07`;
+const appShortName = `sleepwave08`;
 
 if (STORAGE.getItem(`${appShortName}FirstTime`) === null) {
     STORAGE.setItem(`${appShortName}FirstTime`, '0');
@@ -123,7 +123,7 @@ if (STORAGE.getItem(`${appShortName}FirstTime`) === null) {
                 vol: 0.5,
                 muted: false,
                 locked: false,
-            },
+            }, 
         ],  
     };
     STORAGE.setItem(`${appShortName}User`, JSON.stringify(userTMP));
@@ -163,7 +163,7 @@ const onMuteClick = (soundId) => {
                     }
                 });
             }
-            muted = !muted;
+            muted = !muted; 
             muteArea.innerHTML = `${getMuteIcon(muted)}`;
             soundSetting.muted = !soundSetting.muted;
         }
@@ -186,7 +186,7 @@ const onLockClick = (soundId) => {
                 slider.removeAttribute('disabled');
                 slider.classList.replace('locked-slider', 'unlocked-slider');
                 lockArea.classList.replace('locked', 'unlocked');
-            } else {
+            } else { 
                 muteArea.setAttribute('disabled', true);
                 muteArea.classList.replace('unlocked-mute', 'locked-mute');
                 slider.setAttribute('disabled', true);
@@ -264,7 +264,7 @@ const getLockArea = (soundId) => {
     user.sounds.forEach(soundSetting => {
         if (soundSetting.id == soundId) {
             locked = soundSetting.locked;
-        }
+        } 
     });
     return `
         <div id="lockArea${soundId}" class="lock-icon-container ${locked ? 'locked' : 'unlocked'}" onclick="onLockClick(${soundId})">
@@ -355,12 +355,12 @@ AUDIOS.forEach(sound => {
             vol = soundSetting.vol;
             muted = soundSetting.muted;
         } 
-    });
+    }); 
     sound.audio.volume = vol;
     sound.audio.loop = true;
-    sound.audio.currentTime = getRandomIntegerBetween(10, sound.audio.duration - 5);
+    sound.audio.currentTime = getRandomIntegerBetween(10, 240);
     sound.audio.addEventListener("canplaythrough", (event) => {
-        //console.log(sound.name);
+        console.log(sound.name);
         if (!muted) {
             //sound.audio.currentTime = 10; // BUG DE OUF JSP PK
             sound.audio.play();

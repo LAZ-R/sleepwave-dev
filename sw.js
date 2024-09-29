@@ -1,4 +1,4 @@
-var cacheName = 'SLEEPBETA';
+var cacheName = 'SLEEPBETA2';
 var filesToCache = [
   './',
   './index.html',
@@ -23,6 +23,6 @@ self.addEventListener('fetch', function(e) {
       return response || fetch(e.request);
     })
   );
-});
+}); 
 
-const version = '0.0.7';
+const version = '0.0.8';
