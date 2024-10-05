@@ -14,10 +14,11 @@
     --gray-20: #cccccc;
     --gray-10: #e6e6e6;
 
-    --main-0:   #181f1f;
-    --main-25:  #202e2e;
-    --main-50:  #304d4d;
-    --main-100: #76b4b4;
+    --main-0:   hsl(180, 13%, 11%);
+    --main-25:  hsl(180, 18%, 15%);
+    --main-35:  hsl(180, 18%, 18%);
+    --main-50:  hsl(180, 25%, 25%);
+    --main-100: hsl(180, 30%, 60%);
 
     /* Primary */
     --primary: #3a386e;

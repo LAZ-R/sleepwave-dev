@@ -7,123 +7,90 @@ const AUDIOS = [
         id: 1,
         name: "Rain",
         audio: new Audio(`./medias/audio/rain.mp3`),
+        duration: 2212,
     },
     {
         id: 2,
         name: "Wind",
         audio: new Audio(`./medias/audio/wind.mp3`),
+        duration: 1808,
     },
     {
         id: 3,
         name: "Police",
         audio: new Audio(`./medias/audio/gyro.mp3`),
+        duration: 1772,
     },
     {
         id: 4,
         name: "Crickets",
         audio: new Audio(`./medias/audio/crickets.mp3`),
+        duration: 1605,
     },
     {
         id: 5,
         name: "Ships",
         audio: new Audio(`./medias/audio/spaceships.mp3`),
+        duration: 1530,
     },
     {
         id: 6,
         name: "City speaker",
         audio: new Audio(`./medias/audio/japan.mp3`),
+        duration: 1181,
     },
     {
         id: 7,
         name: "Neon",
         audio: new Audio(`./medias/audio/neon.mp3`),
+        duration: 372,
     },
     {
         id: 8,
         name: "City life",
         audio: new Audio(`./medias/audio/people.mp3`),
+        duration: 770,
     }, 
     {
         id: 9,
         name: "Police 2",
         audio: new Audio(`./medias/audio/police2.mp3`),
+        duration: 1428,
     },
     {
         id: 10,
-        name: "Distant ads",
-        audio: new Audio(`./medias/audio/ads.mp3`),
+        name: "City speaker 2",
+        audio: new Audio(`./medias/audio/city_speaker_2.mp3`),
+        duration: 930,
+    },
+    {
+        id: 11,
+        name: "Distant night club",
+        audio: new Audio(`./medias/audio/distant_music.mp3`),
+        duration: 166,
     },
 ]  
 
 // MÉTHODES -------------------------------------------------------------------
 
 const STORAGE = localStorage;
-const appShortName = `sleepwave08`;
+const appShortName = `sleepwave09`;
 
 if (STORAGE.getItem(`${appShortName}FirstTime`) === null) {
     STORAGE.setItem(`${appShortName}FirstTime`, '0');
     let userTMP = {
         sounds: [
-            {
-                id: 1,
-                vol: 0.5,
-                muted: false,
-                locked: false,
-            },
-            {
-                id: 2,
-                vol: 0.5,
-                muted: false,
-                locked: false,
-            },
-            {
-                id: 3,
-                vol: 0.5,
-                muted: false,
-                locked: false,
-            },
-            {
-                id: 4,
-                vol: 0.5,
-                muted: false,
-                locked: false,
-            },
-            {
-                id: 5,
-                vol: 0.5, 
-                muted: false,
-                locked: false,
-            },
-            {
-                id: 6,
-                vol: 0.5,
-                muted: false,
-                locked: false,
-            },  
-            {
-                id: 7,
-                vol: 0.5,
-                muted: false,
-                locked: false,
-            },
-            {
-                id: 8,
-                vol: 0.5,
-                muted: false,
-                locked: false,
-            },
-            {
-                id: 9,
-                vol: 0.5,
-                muted: false,
-                locked: false,
-            },
-            {
-                id: 10,
-                vol: 0.5,
-                muted: false,
-                locked: false,
-            }, 
+            { id:  1, vol: 0.5, muted: false, locked: false },
+            { id:  2, vol: 0.5, muted: false, locked: false },
+            { id:  3, vol: 0.5, muted: false, locked: false },
+            { id:  4, vol: 0.5, muted: false, locked: false },
+            { id:  5, vol: 0.5, muted: false, locked: false },
+            { id:  6, vol: 0.5, muted: false, locked: false },
+            { id:  7, vol: 0.5, muted: false, locked: false },
+            { id:  8, vol: 0.5, muted: false, locked: false },
+            { id:  9, vol: 0.5, muted: false, locked: false },
+            { id: 10, vol: 0.5, muted: false, locked: false },
+            { id: 11, vol: 0.5, muted: false, locked: false }, 
         ],  
     };
     STORAGE.setItem(`${appShortName}User`, JSON.stringify(userTMP));
@@ -153,7 +120,7 @@ const onMuteClick = (soundId) => {
                     if (sound.id == soundId) {
                         sound.audio.play();
                     }
-                });
+                }); 
             } else {
                 muteArea.classList.replace('unmuted', 'muted');
                 slider.classList.replace('unmuted-slider', 'muted-slider');
@@ -357,12 +324,15 @@ AUDIOS.forEach(sound => {
         } 
     }); 
     sound.audio.volume = vol;
-    sound.audio.loop = true;
-    sound.audio.currentTime = getRandomIntegerBetween(10, 240);
+    sound.audio.loop = true; 
+    let maxTime = Math.floor(sound.duration);
+    sound.audio.currentTime = getRandomIntegerBetween(10, maxTime);
+    
     sound.audio.addEventListener("canplaythrough", (event) => {
+        // Ne pas toucher au currentTime ici, ça fait une boucle infinie
         console.log(sound.name);
+        console.log(sound.audio.duration);
         if (!muted) {
-            //sound.audio.currentTime = 10; // BUG DE OUF JSP PK
             sound.audio.play();
         }
     });
