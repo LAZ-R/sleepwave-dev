@@ -74,7 +74,7 @@ const AUDIOS = [
 // MÉTHODES -------------------------------------------------------------------
 
 const STORAGE = localStorage;
-const appShortName = `sleepwave09`;
+const appShortName = `sleepwave010`;
 
 if (STORAGE.getItem(`${appShortName}FirstTime`) === null) {
     STORAGE.setItem(`${appShortName}FirstTime`, '0');
